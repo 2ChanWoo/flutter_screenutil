@@ -70,6 +70,7 @@ class ScreenUtilInit extends StatefulWidget {
     this.child,
     this.rebuildFactor = RebuildFactors.size,
     this.designSize = ScreenUtil.defaultSize,
+    this.maxDesignSize = const Size(0, 0),
     this.splitScreenMode = false,
     this.minTextAdapt = false,
     this.useInheritedMediaQuery = false,
@@ -94,6 +95,8 @@ class ScreenUtilInit extends StatefulWidget {
 
   /// The [Size] of the device in the design draft, in dp
   final Size designSize;
+  /// if  < 0, ignored. (ex, Size(1000, 0), only applied width)
+  final Size maxDesignSize;
   final Iterable<String>? responsiveWidgets;
   final Iterable<String>? excludeWidgets;
 
@@ -184,6 +187,7 @@ class _ScreenUtilInitState extends State<ScreenUtilInit> with WidgetsBindingObse
       ScreenUtil.configure(
         data: mq,
         designSize: widget.designSize,
+        maxDesignSize: widget.maxDesignSize,
         splitScreenMode: widget.splitScreenMode,
         minTextAdapt: widget.minTextAdapt,
         fontSizeResolver: widget.fontSizeResolver,
@@ -198,6 +202,7 @@ class _ScreenUtilInitState extends State<ScreenUtilInit> with WidgetsBindingObse
         ScreenUtil.configure(
           data: mq,
           designSize: widget.designSize,
+          maxDesignSize: widget.maxDesignSize,
           splitScreenMode: widget.splitScreenMode,
           minTextAdapt: widget.minTextAdapt,
           fontSizeResolver: widget.fontSizeResolver,

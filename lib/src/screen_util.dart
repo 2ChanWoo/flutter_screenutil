@@ -23,6 +23,7 @@ class ScreenUtil {
   /// UI设计中手机尺寸 , dp
   /// Size of the phone in UI Design , dp
   late Size _uiSize;
+  late Size _uiMaxSize;
 
   ///屏幕方向
   late Orientation _orientation;
@@ -111,6 +112,7 @@ class ScreenUtil {
   static void configure({
     MediaQueryData? data,
     Size? designSize,
+    Size? maxDesignSize,
     bool? splitScreenMode,
     bool? minTextAdapt,
     FontSizeResolver? fontSizeResolver,
@@ -125,6 +127,11 @@ class ScreenUtil {
         _instance._uiSize = designSize;
       else
         designSize = _instance._uiSize;
+
+      if(maxDesignSize != null)
+        _instance._uiMaxSize = maxDesignSize;
+      else
+        maxDesignSize = const Size(0, 0);
     } catch (_) {
       throw Exception(
           'You must either use ScreenUtil.init or ScreenUtilInit first');
@@ -197,11 +204,21 @@ class ScreenUtil {
 
   /// 当前设备宽度 dp
   /// The horizontal extent of this size.
-  double get screenWidth => _data.size.width;
+  double get screenWidth {
+    if(_uiMaxSize.width > 0) {
+      return _data.size.width > _uiMaxSize.width ? _uiMaxSize.width : _data.size.width;
+    }
+   return _data.size.width;
+  }
 
   ///当前设备高度 dp
   ///The vertical extent of this size. dp
-  double get screenHeight => _data.size.height;
+  double get screenHeight {
+    if(_uiMaxSize.height > 0) {
+      return _data.size.height > _uiMaxSize.height ? _uiMaxSize.height : _data.size.height;
+    }
+    return _data.size.height;
+  }
 
   /// 状态栏高度 dp 刘海屏会更高
   /// The offset from the top, in dp
