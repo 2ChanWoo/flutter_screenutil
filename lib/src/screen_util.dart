@@ -205,6 +205,9 @@ class ScreenUtil {
   /// 当前设备宽度 dp
   /// The horizontal extent of this size.
   double get screenWidth {
+    if(_data.size.width < 500) {
+      return _data.size.width*2;
+    }
     if(_uiMaxSize.width > 0) {
       return _data.size.width > _uiMaxSize.width ? _uiMaxSize.width : _data.size.width;
     }
